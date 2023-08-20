@@ -39,26 +39,29 @@ function App() {
 
   return (
     <>
-      <div>
-        <h1>Chrome Notes</h1>
-        <p>Note it down....without switching tabs!</p>
+      <div className='bg-white rounded-2xl shadow-2xl p-10'>
+        <h1 className='text-center'>Chrome Notes</h1>
+        <p className='text-center'>Note it down....without switching tabs!</p>
         <div className='p-4 flex'>
           <input 
-              className='outline p-4'
+              className=' p-4 bg-white rounded-2xl shadow-lg'
               type="text"
               placeholder='Your note'
               value={input}
               onChange={(e) => setInput(e.target.value)}
           />
-          <button className='ml-4' onClick={addNote}>Add Note</button>
+          <button className='ml-4 bg-teal-400 text-white rounded-2xl shadow-lg p-4' onClick={addNote}>Add Note</button>
         </div>
-        <div>
+        <div className='ml-4 flex flex-col space-between'>
           <ul>
             {notes.map(note => (
+              <div className='m-2 bg-gray-900 rounded-lg text-gray-400'>
               <li key={note.id}>
-                <span>{note.text}</span>
-                <button onClick={() => deleteNote(note.id)}>Delete</button>
-              </li>
+                  <span className=' rounded-s-lg'>{note.text}</span>
+                  <button className='flex justify-end bg-teal-400 text-white p-1 rounded-e-lg' onClick={() => deleteNote(note.id)}>Delete</button>
+                </li>
+              </div>
+
             ))}
           </ul>
         </div>
