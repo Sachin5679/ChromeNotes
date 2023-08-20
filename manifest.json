@@ -1,0 +1,12 @@
+{
+    "manifest_version": 3,
+    "name": "ChromeNotes Extension",
+    "version": "1.0",
+    "description": "A simple note-taking extension",
+    "permissions": ["storage"],
+    "action": {
+      "default_popup": "index.html",
+      "default_icon": {}
+    }
+  }
+  

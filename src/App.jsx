@@ -10,10 +10,15 @@ function App() {
   useEffect(() => {
     
     //using localStorage for testing purposes. later use chrome.storage
-    const saved = localStorage.getItem('notes');
-    if (saved) {
-      setNotes(JSON.parse(saved));
-    }
+    // const saved = localStorage.getItem('notes');
+    // if (saved) {
+    //   setNotes(JSON.parse(saved));
+    // }
+    chrome.storage.local.get('notes', (data) => {
+      if (data.notes) {
+        setNotes(data.notes);
+      }
+    });
   }, [])
 
   const addNote = () => {
@@ -23,18 +28,24 @@ function App() {
         text: input.trim()
       };
       const updatedNotes = [...notes, newNote];
-      setNotes(updatedNotes);
 
       //using localStorage for testing purposes. later use chrome.storage
-      localStorage.setItem('notes', JSON.stringify(updatedNotes));
+      // localStorage.setItem('notes', JSON.stringify(updatedNotes));
+      chrome.storage.local.set({ notes: updatedNotes }, () => {
+        setNotes(updatedNotes);
+        setInput('');
+      });
     }
   }
 
   const deleteNote = (id) => {
     const updatedNotes = notes.filter(note => note.id !== id);
-    setNotes(updatedNotes);
+    
 
-    localStorage.setItem('notes', JSON.stringify(updatedNotes));
+    // localStorage.setItem('notes', JSON.stringify(updatedNotes));
+    chrome.storage.local.set({ notes: updatedNotes }, () => {
+      setNotes(updatedNotes);
+    });
   }
 
   return (
