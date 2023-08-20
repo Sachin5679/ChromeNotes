@@ -1,33 +1,63 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [notes, setNotes] = useState([]);
+  const [input, setInput] = useState('');
+
+  useEffect(() => {
+    
+    //using localStorage for testing purposes. later use chrome.storage
+    const saved = localStorage.getItem('notes');
+    if (saved) {
+      setNotes(JSON.parse(saved));
+    }
+  }, [])
+
+  const addNote = () => {
+    if (input.trim() !== ''){
+      const newNote = {
+        id: Date.now(),
+        text: input.trim()
+      };
+      const updatedNotes = [...notes, newNote];
+      setNotes(updatedNotes);
+
+      //using localStorage for testing purposes. later use chrome.storage
+      localStorage.setItem('notes', JSON.stringify(updatedNotes));
+    }
+  }
 
   return (
     <>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <h1>Chrome Notes</h1>
+        <p>Note it down....without switching tabs!</p>
+        <div className='p-4 flex'>
+          <input 
+              className='outline p-4'
+              type="text"
+              placeholder='Your note'
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+          />
+          <button className='ml-4' onClick={addNote}>Add Note</button>
+        </div>
+        <div>
+          <ul>
+            {notes.map(note => (
+              <li key={note.id}>
+                <span>{note.text}</span>
+                <button>Delete</button>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
