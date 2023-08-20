@@ -30,6 +30,13 @@ function App() {
     }
   }
 
+  const deleteNote = (id) => {
+    const updatedNotes = notes.filter(note => note.id !== id);
+    setNotes(updatedNotes);
+
+    localStorage.setItem('notes', JSON.stringify(updatedNotes));
+  }
+
   return (
     <>
       <div>
@@ -50,7 +57,7 @@ function App() {
             {notes.map(note => (
               <li key={note.id}>
                 <span>{note.text}</span>
-                <button>Delete</button>
+                <button onClick={() => deleteNote(note.id)}>Delete</button>
               </li>
             ))}
           </ul>
