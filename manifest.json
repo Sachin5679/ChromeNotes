@@ -5,8 +5,7 @@
     "description": "A simple note-taking extension",
     "permissions": ["storage"],
     "action": {
-      "default_popup": "index.html",
-      "default_icon": {}
+      "default_popup": "index.html"
     }
   }
   

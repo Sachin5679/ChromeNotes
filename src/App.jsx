@@ -12,7 +12,7 @@ function App() {
     // if (saved) {
     //   setNotes(JSON.parse(saved));
     // }
-    chrome.storage.local.get('notes', (data) => {
+    chrome.storage.local.get(['notes'], (data) => {
       if (data.notes) {
         setNotes(data.notes);
       }
@@ -27,8 +27,7 @@ function App() {
       };
       const updatedNotes = [...notes, newNote];
 
-      //using localStorage for testing purposes. later use chrome.storage
-      // localStorage.setItem('notes', JSON.stringify(updatedNotes));
+      
       chrome.storage.local.set({ notes: updatedNotes }, () => {
         setNotes(updatedNotes);
         setInput('');
@@ -40,7 +39,7 @@ function App() {
     const updatedNotes = notes.filter(note => note.id !== id);
     
 
-    // localStorage.setItem('notes', JSON.stringify(updatedNotes));
+    
     chrome.storage.local.set({ notes: updatedNotes }, () => {
       setNotes(updatedNotes);
     });
